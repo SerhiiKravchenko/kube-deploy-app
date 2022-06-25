@@ -10,10 +10,10 @@ pipeline {
       }
     }
 
-    stage('Publish') {
+    stage('Deploy') {
       steps {
         script {
-          kubernetesDeploy(configs: "kube-deploy-app.yml", kubeconfigId: "mykubeconfigcred")
+          kubernetesDeploy(configs: "nginx.yaml", kubeconfigId: "mykubeconfigcred")
         }
       }
     }
