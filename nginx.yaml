@@ -1,37 +1,70 @@
----
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  labels:
+#    app: web
+#  name: mynginx
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: web
+#  template:
+#    metadata:
+#      labels:
+#        app: web
+#    spec:
+#      containers:
+#        - image: nginx
+#          name: mynginx
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  labels:
+#    app: web
+#  name: mynginx
+#spec:
+#  ports:
+#    - nodePort: 32223
+#      port: 80
+#      protocol: TCP
+#      targetPort: 80
+#  selector:
+#    app: web
+#  type: NodePort
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: web
-  name: mynginx
+  name: bb-demo
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web
+      bb: web
   template:
     metadata:
       labels:
-        app: web
+        bb: web
     spec:
       containers:
-        - image: nginx
-          name: mynginx
-
+        - name: bb-site
+          image: getting-started
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: web
-  name: mynginx
+  name: bb-entrypoint
+  namespace: default
 spec:
-  ports:
-    - nodePort: 32223
-      port: 80
-      protocol: TCP
-      targetPort: 80
-  selector:
-    app: web
   type: NodePort
+  selector:
+    bb: web
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001

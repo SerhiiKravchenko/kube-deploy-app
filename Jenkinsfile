@@ -14,6 +14,7 @@ pipeline {
       steps {
         script {
           kubernetesDeploy(configs: "nginx.yaml", kubeconfigId: "mykubeconfig")
+
         }
       }
     }
